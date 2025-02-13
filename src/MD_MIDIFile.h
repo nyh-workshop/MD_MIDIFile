@@ -383,7 +383,7 @@ http://www.stephenhobley.com/blog/2011/03/14/the-last-darned-midi-interface-ill-
 #define _MDMIDIFILE_H
 
 #include <Arduino.h>
-#include <SdFat.h>
+#include <LittleFS.h>
 
 /**
  * \file
@@ -464,25 +464,9 @@ http://www.stephenhobley.com/blog/2011/03/14/the-last-darned-midi-interface-ill-
 #define DUMPX(s, x)   ///< Print a value (hex)
 #endif // DUMP_DATA
 
-#if SD_FAT_TYPE == 0      // SDFat
-typedef SdFat SDFAT;      ///< SDFat class used
+typedef FS SDFAT;      ///< SDFat class used
 typedef File SDDIR;       ///< File type for folders
 typedef File SDFILE;      ///< File type for files
-#elif SD_FAT_TYPE == 1    // FAT16/FAT32
-typedef SdFat32 SDFAT;    ///< SDFat class used
-typedef File32 SDDIR;     ///< File type for folders
-typedef File32 SDFILE;    ///< File type for files
-#elif SD_FAT_TYPE == 2    // ExFAT
-typedef SdExFat SDFAT;    ///< SDFat class used
-typedef ExFile SDDIR;     ///< File type for folders
-typedef ExFile SDFILE;    ///< File type for files 
-#elif SD_FAT_TYPE == 3    // FAT16/FAT32/exFAT
-typedef SdFs SDFAT;       ///< SDFat class used
-typedef FsFile SDDIR;     ///< File type for folders
-typedef FsFile SDFILE;    ///< File type for files
-#else  
-#error invalid definition for SD_FAT_TYPE
-#endif  // SD_FAT_TYPE
 
 /**
  MIDI event definition structure
@@ -978,7 +962,7 @@ public:
    * \param apath pointer to a string with the path name.
    * \return No return data.
    */
-  void setFileFolder(const char* apath) { if (apath != nullptr && _sd->chdir(apath)) _sd->chvol(); }
+  // void setFileFolder(const char* apath) { if (apath != nullptr && _sd->chdir(apath)) _sd->chvol(); }
 
   /** 
    * Load the named SMF
